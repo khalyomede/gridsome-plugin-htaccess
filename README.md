@@ -2,7 +2,7 @@
 
 Generates a .htaccess file at build time according to your options and save it at the root of your dist folder.
 
-[![Build Status](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess.svg?branch=master)](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess) [![codecov](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess/branch/master/graph/badge.svg)](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess) [![Maintainability](https://api.codeclimate.com/v1/badges/8ff55034cb48484f551c/maintainability)](https://codeclimate.com/github/khalyomede/gridsome-plugin-htaccess/maintainability)
+[![npm](https://img.shields.io/npm/v/gridsome-plugin-htaccess)](https://www.npmjs.com/package/gridsome-plugin-htaccess) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/gridsome-plugin-htaccess/peer/gridsome)](https://www.npmjs.com/package/gridsome) ![NPM](https://img.shields.io/npm/l/gridsome-plugin-htaccess) [![Build Status](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess.svg?branch=master)](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess) [![codecov](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess/branch/master/graph/badge.svg)](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess) [![Maintainability](https://api.codeclimate.com/v1/badges/8ff55034cb48484f551c/maintainability)](https://codeclimate.com/github/khalyomede/gridsome-plugin-htaccess/maintainability) ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/gridsome-plugin-htaccess) ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/gridsome-plugin-htaccess)
 
 ## Summary
 

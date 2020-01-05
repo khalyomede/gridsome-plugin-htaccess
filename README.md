@@ -2,6 +2,8 @@
 
 Generates a .htaccess file at build time according to your options and save it at the root of your dist folder.
 
+[![Build Status](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess.svg?branch=master)](https://travis-ci.com/khalyomede/gridsome-plugin-htaccess) [![codecov](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess/branch/master/graph/badge.svg)](https://codecov.io/gh/khalyomede/gridsome-plugin-htaccess) [![Maintainability](https://api.codeclimate.com/v1/badges/8ff55034cb48484f551c/maintainability)](https://codeclimate.com/github/khalyomede/gridsome-plugin-htaccess/maintainability)
+
 ## Summary
 
 - [About](#about)

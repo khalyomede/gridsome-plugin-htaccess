@@ -1,0 +1,59 @@
+{
+	"name": "gridsome-plugin-htaccess",
+	"version": "0.1.0",
+	"description": "Generates a .htaccess file at build time according to your options and save it at the root of your dist folder.",
+	"main": "gridsome.server.js",
+	"repository": "https://github.com/khalyomede/gridsome-plugin-htaccess",
+	"author": "Khalyomede <khalyomede@gmail.com>",
+	"license": "MIT",
+	"private": false,
+	"devDependencies": {
+		"@babel/core": "7.*",
+		"@babel/plugin-transform-runtime": "7.*",
+		"@babel/preset-env": "7.*",
+		"@babel/register": "7.*",
+		"@babel/runtime": "7.*",
+		"@rollup/plugin-commonjs": "11.*",
+		"@rollup/plugin-json": "4.*",
+		"@rollup/plugin-node-resolve": "6.*",
+		"@rollup/plugin-typescript": "2.*",
+		"@types/hapi__joi": "16.*",
+		"@types/node": "13.*",
+		"add": "^2.0.6",
+		"chai": "4.*",
+		"codecov": "3.*",
+		"gulp": "4.*",
+		"mocha": "7.*",
+		"mocha-sinon": "2.*",
+		"np": "5.*",
+		"npm-check-updates": "4.*",
+		"nyc": "15.*",
+		"rollup": "1.*",
+		"rollup-plugin-node-builtins": "2.*",
+		"rollup-plugin-node-globals": "1.*",
+		"rollup-plugin-tslint": "0.*",
+		"sinon": "8.*",
+		"tslib": "1.*",
+		"typescript": "3.*",
+		"yarn": "^1.21.1"
+	},
+	"peerDependencies": {
+		"gridsome": "0.*"
+	},
+	"keywords": [
+		"gridsome-plugin",
+		"htaccess",
+		"apache",
+		"server"
+	],
+	"scripts": {
+		"build": "gulp build",
+		"test": "nyc --reporter=lcov mocha --require @babel/register test",
+		"coverage": "codecov",
+		"release": "np"
+	},
+	"files": [
+		"gridsome.server.js"
+	],
+	"dependencies": {}
+}

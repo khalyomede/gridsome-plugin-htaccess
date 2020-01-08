@@ -664,4 +664,17 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 			)
 		).to.be.true;
 	});
+
+	it("should throw an exception if the provided ip of the blockedIp option is not valid", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			blockedIp: ["192.168.0."],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "blockedIp[0]" must be a valid IP`
+			)
+		).to.be.true;
+	});
 });

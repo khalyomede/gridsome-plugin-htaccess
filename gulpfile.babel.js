@@ -14,7 +14,11 @@ const ts = async () => {
 			nodeResolve({
 				preferBuiltins: true,
 			}),
-			commonjs(),
+			commonjs({
+				namedExports: {
+					"is-ip": ["v4", "v6"],
+				},
+			}),
 			tslint(),
 			typescript(),
 		],

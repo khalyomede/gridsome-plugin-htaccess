@@ -1,6 +1,11 @@
 import { IOptions, IApi } from "./interface";
-import { InvalidCharacterError, MissingKeyError } from "./exception";
+import {
+	InvalidCharacterError,
+	MissingKeyError,
+	InvalidArgumentError,
+} from "./exception";
 import { writeFileSync } from "fs";
+import { v4, v6 } from "is-ip";
 
 class GridsomePluginHtaccess {
 	protected _options: IOptions;
@@ -22,7 +27,8 @@ class GridsomePluginHtaccess {
 					error instanceof InvalidCharacterError ||
 					error instanceof TypeError ||
 					error instanceof MissingKeyError ||
-					error instanceof RangeError
+					error instanceof RangeError ||
+					error instanceof InvalidArgumentError
 				) {
 					console.error(`gridsome-plugin-htaccess: ${error.message}`);
 					console.timeEnd("gridsome-plugin-htaccess");
@@ -433,6 +439,14 @@ class GridsomePluginHtaccess {
 		this._throwIfMissingOption(optionName);
 		this._throwIfOptionNotArray(optionName);
 		this._throwIfOptionNotArrayOfStrings(optionName);
+
+		for (const [index, ip] of this._options.blockedIp.entries()) {
+			if (!v4(ip) && !v6(ip)) {
+				throw new InvalidArgumentError(
+					`"blockedIp[${index}]" must be a valid IP`
+				);
+			}
+		}
 	}
 
 	private _checkBlockedUserAgentsOption(): void {

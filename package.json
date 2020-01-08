@@ -23,6 +23,7 @@
 		"chai": "4.*",
 		"codecov": "3.*",
 		"gulp": "4.*",
+		"is-ip": "3.*",
 		"mocha": "7.*",
 		"mocha-sinon": "2.*",
 		"np": "5.*",

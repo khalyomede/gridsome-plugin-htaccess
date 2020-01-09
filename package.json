@@ -52,7 +52,7 @@
 	],
 	"scripts": {
 		"build": "gulp build",
-		"test": "nyc --reporter=lcov mocha --require @babel/register test",
+		"test": "nyc --reporter=lcov --reporter=text mocha --require @babel/register test",
 		"coverage": "codecov",
 		"release": "np"
 	},

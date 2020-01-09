@@ -6,6 +6,7 @@ import {
 } from "./exception";
 import { writeFileSync } from "fs";
 import { v4, v6 } from "is-ip";
+import mimeDb from "mime-db";
 
 class GridsomePluginHtaccess {
 	protected _options: IOptions;
@@ -653,6 +654,17 @@ class GridsomePluginHtaccess {
 		this._throwIfMissingOption(optionName);
 		this._throwIfOptionNotArray(optionName);
 		this._throwIfOptionNotArrayOfStrings(optionName);
+
+		for (const [
+			index,
+			mimeType,
+		] of this._options.textCompression.entries()) {
+			if (!(mimeType in mimeDb)) {
+				throw new InvalidArgumentError(
+					`"textCompression[${index}]" must be a valid MIME type`
+				);
+			}
+		}
 	}
 
 	private _checkCustomContent(): void {

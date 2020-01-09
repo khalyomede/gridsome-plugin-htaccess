@@ -10505,7 +10505,16 @@ class GridsomePluginHtaccess {
             let policies = [];
             for (const policyName in this._options.contentSecurityPolicy) {
                 let values = this._options.contentSecurityPolicy[policyName];
-                values = values.map(policy => ["none", "src", "self"].includes(policy)
+                values = values.map(policy => [
+                    "none",
+                    "src",
+                    "self",
+                    "unsafe-eval",
+                    "unsafe-hashes",
+                    "unsafe-inline",
+                    "strict-dynamic",
+                    "report-sample",
+                ].includes(policy)
                     ? `'${policy}'`
                     : policy);
                 const policyValues = values.join(" ");

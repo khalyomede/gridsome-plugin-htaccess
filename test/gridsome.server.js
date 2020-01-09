@@ -677,4 +677,89 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 			)
 		).to.be.true;
 	});
+
+	it("should throw an exception if the to key of the redirections option is not a valid absolute path", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			redirections: [
+				{
+					from: "/about",
+					to: "./about-us",
+				},
+			],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "redirections[0].to" must be an absolute path or a valid HTTP URL`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the from key of the redirections option is not a valid absolute path", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			redirections: [
+				{
+					from: "./about",
+					to: "/about-us",
+				},
+			],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "redirections[0].from" must be an absolute path or a valid HTTP URL`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the to key of the redirections option is not a valid HTTP URL", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			redirections: [
+				{
+					from: "/about",
+					to: "example.com/about-us",
+				},
+			],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "redirections[0].to" must be an absolute path or a valid HTTP URL`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the from key of the redirections option is not a valid absolute path", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			redirections: [
+				{
+					from: "example.com/test",
+					to: "/about-us",
+				},
+			],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "redirections[0].from" must be an absolute path or a valid HTTP URL`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the from key of the redirections option is not a valid absolute path", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			textCompression: ["text/foo"],
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "textCompression[0]" must be a valid MIME type`
+			)
+		).to.be.true;
+	});
 });

@@ -5,8 +5,10 @@ import {
 	InvalidArgumentError,
 } from "./exception";
 import { writeFileSync } from "fs";
+import { isAbsolute } from "path";
 import { v4, v6 } from "is-ip";
 import mimeDb from "mime-db";
+import isUrlHttp from "is-url-http";
 
 class GridsomePluginHtaccess {
 	protected _options: IOptions;
@@ -645,6 +647,18 @@ class GridsomePluginHtaccess {
 			if (typeof redirection.to !== "string") {
 				throw new TypeError(
 					`"${optionName}[${index}].to" must be a string`
+				);
+			}
+
+			if (!isAbsolute(redirection.from) && !isUrlHttp(redirection.from)) {
+				throw new InvalidArgumentError(
+					`"${optionName}[${index}].from" must be an absolute path or a valid HTTP URL`
+				);
+			}
+
+			if (!isAbsolute(redirection.to) && !isUrlHttp(redirection.to)) {
+				throw new InvalidArgumentError(
+					`"${optionName}[${index}].to" must be an absolute path or a valid HTTP URL`
 				);
 			}
 		}

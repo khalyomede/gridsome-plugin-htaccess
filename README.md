@@ -141,7 +141,7 @@ _Options specified with the "?:" means non mandatory keys_.
 - options
   - **blockedIp**: `Array<string>` A list of IP to block from being able to browser your web app. [Order Apache documentation](https://httpd.apache.org/docs/2.4/en/mod/mod_access_compat.html#order).
   - **blockedUserAgents**: `Array<string>` A list of user agents you want to prevent from accessing your server files, to save your server resources for example.
-  - **contentSecurityPolicy**: `ContentSecurityPolicy` A set of key-value pairs that holds your content security policies. [Content-SecurityPolicy MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+  - **contentSecurityPolicy**: `ContentSecurityPolicy` A set of key-value pairs that holds your content security policies. You do not need to single-quote the following values (this is done for you): `none`, `src`, `self`, `unsafe-eval`, `unsafe-hashes`, `unsafe-inline`, `strict-dynamic` and `report-sample`. [Content-SecurityPolicy MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
   - **customContent**?: `CustomContent` Some custom content to append or prerend to the generated htaccess content.
   - **customHeaders**: `CustomHeaders` A set of key-value pairs to add custom headers to each responses. [Headers Apache documentation](https://httpd.apache.org/docs/current/en/mod/mod_headers.html).
   - **disableDirectoryIndex**: `Boolean` If set to true, will add a rule to disable the directory index. [Directory index Apache documentation](https://httpd.apache.org/docs/2.4/en/mod/mod_dir.html#directoryindex).

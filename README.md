@@ -305,10 +305,10 @@ module.exports = {
       use: "gridsome-plugin-htaccess",
       options: {
         fileExpirations: {
-		  fileTypes {
-			  "text/html": "access plus 1 day",
-			  "image/png": "access plus 1 week"
-		  }
+          fileTypes: {
+            "text/html": "access plus 1 day",
+            "image/png": "access plus 1 week",
+          },
         },
       },
     },

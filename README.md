@@ -11,6 +11,7 @@ Generates a .htaccess file at build time according to your options and save it a
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Examples](#examples)
 - [API](#api)
 - [Changelog](CHANGELOG.md)
 
@@ -133,6 +134,334 @@ Now check on the `.htaccess` file in your `dist` folder. You should see this con
 </IfModule>
 ```
 
+## Examples
+
+- [1. Blocking IPs](#1-blocking-ip)
+- [2. Blocking user agents](#2-blocking-user-agents)
+- [3. Adding Content security policies](#3-adding-content-security-policies)
+- [4. Adding custom content](#4-adding-custom-content)
+- [5. Adding custom headers](#5-adding-custom-headers)
+- [6. Disabling directory index](#6-disabling-directory-index)
+- [7. Preventing the server from sending its signature](#7-Preventing-the-server-from-sending-its-signature)
+- [8. Adding Feature policies](#8-adding-feature-policies)
+- [9. Adding custom file expirations](#9-adding-custom-file-expirations)
+- [10. Adding a default file expirations for all the file types](#10-adding-a-default-file-expirations-for-all-the-file-types)
+- [11. Force HTTPS](#11-force-https)
+- [12. Prevent files from being cached by the browser](#12-prevent-files-from-being-cached-by-the-browser)
+- [13. Prevent from being able to ping your server](#13-prevent-from-being-able-to-ping-your-server)
+- [14. Prevent DDoS attacks by limiting the size of the downloaded files](#14-prevent-ddos-attacks-by-limiting-the-size-of-the-downloaded-files)
+- [15. Prevent script injection in the URL](#15-prevent-script-injection-in-the-url)
+- [16. Setting up redirections](#16-setting-up-redirections)
+- [17. Enabling text compression by file type](#17-enabling-text-compression-by-file-type)
+
+### 1. Blocking IPs
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        blockedIp: ["192.168.0.1", "8.8.4.4"],
+      },
+    },
+  ],
+};
+```
+
+### 2. Blocking user agents
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        blockedUserAgents: ["googlebot", "yandexbot", "bingbot"],
+      },
+    },
+  ],
+};
+```
+
+### 3. Adding Content security policies
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        contentSecurityPolicy: {
+          "frame-src": ["self", "youtube.com"],
+          "script-src": ["self"],
+          "font-src": ["fonts.google.com"],
+        },
+      },
+    },
+  ],
+};
+```
+
+### 4. Adding custom content
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        customcontent: {
+          order: "after",
+          content: "SSLProtocol -ALL +TLSv1.2",
+        },
+      },
+    },
+  ],
+};
+```
+
+### 5. Adding custom headers
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        customHeaders: {
+          "X-Powered-By": "Gridsome 0.7.12",
+        },
+      },
+    },
+  ],
+};
+```
+
+### 6. Disabling directory index
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        disableDirectoryIndex: true,
+      },
+    },
+  ],
+};
+```
+
+### 7. Preventing the server from sending its signature
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        disableServerSignature: true,
+      },
+    },
+  ],
+};
+```
+
+### 8. Adding Feature policies
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        featurePolicy: {
+          geolocation: ["none"],
+          battery: ["self"],
+          "ambient-light-sensor": ["self", "amazon.com"],
+        },
+      },
+    },
+  ],
+};
+```
+
+### 9. Adding custom file expirations
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        fileExpirations: {
+		  fileTypes {
+			  "text/html": "access plus 1 day",
+			  "image/png": "access plus 1 week"
+		  }
+        },
+      },
+    },
+  ],
+};
+```
+
+### 10. Adding a default file expirations for all the file types
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        fileExpirations: {
+          default: "access plus 1 month",
+        },
+      },
+    },
+  ],
+};
+```
+
+### 11. Force HTTPS
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        forceHttps: true,
+      },
+    },
+  ],
+};
+```
+
+### 12. Prevent files from being cached by the browser
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        notCachedFiles: ["/service-worker.js", "/assets/js/service-worker.js"],
+      },
+    },
+  ],
+};
+```
+
+### 13. Prevent from being able to ping your server
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        pingable: false,
+      },
+    },
+  ],
+};
+```
+
+### 14. Prevent DDoS attacks by limiting the size of the downloaded files
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        preventDdosAttacks: {
+          downloadedFilesSizeLimit: 102400, // in bytes
+        },
+      },
+    },
+  ],
+};
+```
+
+### 15. Prevent script injection in the URL
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        preventScriptInjection: true,
+      },
+    },
+  ],
+};
+```
+
+### 16. Setting up redirections
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        redirections: [
+          {
+            from: "/about",
+            to: "/about-us",
+          },
+          {
+            from: "/webp",
+            to: "https://dev.to/webp",
+          },
+        ],
+      },
+    },
+  ],
+};
+```
+
+### 17. Enabling text compression by file type
+
+```javascript
+// gridsome.config.js
+module.exports = {
+  plugins: [
+    {
+      use: "gridsome-plugin-htaccess",
+      options: {
+        textCompression: [
+          "text/html",
+          "application/javascript",
+          "text/css",
+          "image/png",
+        ],
+      },
+    },
+  ],
+};
+```
+
 ## API
 
 _You will find the types of the complex types right below this list._
@@ -177,6 +506,10 @@ interface DdosAttackPreventionOption {
 interface CustomContent {
   order: "before" | "after";
   content: string;
+}
+
+interface CustomHeaders {
+  [key: string]: string;
 }
 
 interface FileExpirations {

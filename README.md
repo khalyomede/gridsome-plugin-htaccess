@@ -147,6 +147,7 @@ _Options specified with the "?:" means non mandatory keys_.
   - **disableDirectoryIndex**: `Boolean` If set to true, will add a rule to disable the directory index. [Directory index Apache documentation](https://httpd.apache.org/docs/2.4/en/mod/mod_dir.html#directoryindex).
   - **disableServerSignature**: `Boolean` If set to true, will add a rule to prevent sending the server signature in each responses. [Server signature Apache documentation](https://httpd.apache.org/docs/2.4/en/mod/core.html#serversignature).
   - **featurePolicy**: `FeaturePolicy` A set of key-value pairs holding your feature policies. [Feature-Policy MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy).
+  - **fileExpirations**: `FileExpirations` An object that let you control how your file types should be cached by the browser. You can also set a default file cache. [ExpiresByType Apache documentation](https://httpd.apache.org/docs/2.4/en/mod/mod_expires.html#expiresbytype).
   - **forceHttps**: `Boolean` If set to true, will add a rule to force your users' browser to go to the HTTPS version of your web app.
   - **notCachedFiles**: `Array<string>` A list of file paths that you want to prevent from being cached by your users' browser.
   - **pingable**: `Boolean` If set to true, will add a rule to prevent to ping your domain.
@@ -176,5 +177,14 @@ interface DdosAttackPreventionOption {
 interface CustomContent {
   order: "before" | "after";
   content: string;
+}
+
+interface FileExpirations {
+  default?: string;
+  fileTypes?: FileType;
+}
+
+interface FileType {
+  [key: string]: string;
 }
 ```

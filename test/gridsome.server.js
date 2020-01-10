@@ -350,6 +350,42 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		expect(actual).to.be.equal(expected);
 	});
 
+	it("should generate the rules that apply a default browser cache", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				default: "access plus one year",
+			},
+		});
+
+		const expected = `# Default file expiration
+ExpiresDefault "access plus one year"
+
+`;
+		const actual = readFileSync("./static/.htaccess").toString();
+
+		expect(actual).to.be.equal(expected);
+	});
+
+	it("should generate the rules that apply a default browser cache", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				fileTypes: {
+					"text/html": "access plus one day",
+				},
+			},
+		});
+
+		const expected = `# Files expirations
+ExpiresByType text/html "access plus one day"
+
+`;
+		const actual = readFileSync("./static/.htaccess").toString();
+
+		expect(actual).to.be.equal(expected);
+	});
+
 	it("should throw an exception if a file in the notCachedFiles option contains a double quote", () => {
 		new GridsomeServer(api, {
 			...GridsomeServer.defaultOptions(),
@@ -759,6 +795,102 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		expect(
 			console.error.calledWith(
 				`gridsome-plugin-htaccess: "textCompression[0]" must be a valid MIME type`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the default key of the fileExpirations option contains a double quote", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				default: 'access "plus" one year',
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.default" must not contain any double quote`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the default key of the fileExpirations option is not a string", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				default: 42,
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.default" must be a string`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the fileTypes key of the fileExpirations option is not an object", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				fileTypes: 42,
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.fileTypes" must be an object`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the fileTypes key of the fileExpirations option is not a valid MIME type", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				fileTypes: {
+					"text/unknown": "access plus one year",
+				},
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.fileTypes.text/unknown" must be a valid MIME type`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the fileTypes key of the fileExpirations option is not a string", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				fileTypes: {
+					"text/html": 42,
+				},
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.fileTypes.text/html" must be a string`
+			)
+		).to.be.true;
+	});
+
+	it("should throw an exception if the fileTypes key of the fileExpirations option contains a double quote", () => {
+		new GridsomeServer(api, {
+			...GridsomeServer.defaultOptions(),
+			fileExpirations: {
+				fileTypes: {
+					"text/html": 'access "plus" one year',
+				},
+			},
+		});
+
+		expect(
+			console.error.calledWith(
+				`gridsome-plugin-htaccess: "fileExpirations.fileTypes.text/html" must not contain any double quote`
 			)
 		).to.be.true;
 	});

@@ -3,7 +3,7 @@ import {
 	IFeaturePolicy,
 	IRedirection,
 	IDdosAttackPreventionOption,
-	IFilesExpiration,
+	IFileExpirations,
 	ICustomHeaders,
 	ICustomContent,
 } from "./index";
@@ -22,7 +22,7 @@ interface IOptions {
 	redirections: Array<IRedirection>;
 	preventScriptInjection: boolean;
 	preventDdosAttacks?: IDdosAttackPreventionOption;
-	filesExpiration: IFilesExpiration;
+	fileExpirations: IFileExpirations;
 	customHeaders: ICustomHeaders;
 	blockedUserAgents: Array<string>;
 	blockedIp: Array<string>;

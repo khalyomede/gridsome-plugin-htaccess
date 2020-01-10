@@ -4,7 +4,7 @@ import ICustomContent from "./ICustomContent";
 import ICustomHeaders from "./ICustomHeaders";
 import IDdosAttackPreventionOption from "./IDdosAttackPreventionOption";
 import IFeaturePolicy from "./IFeaturePolicy";
-import IFilesExpiration from "./IFilesExpiration";
+import IFileExpirations from "./IFileExpirations";
 import IOptions from "./IOptions";
 import IRedirection from "./IRedirection";
 
@@ -16,6 +16,6 @@ export {
 	ICustomHeaders,
 	IDdosAttackPreventionOption,
 	IFeaturePolicy,
-	IFilesExpiration,
+	IFileExpirations,
 	IRedirection,
 };

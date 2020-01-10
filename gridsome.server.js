@@ -11849,6 +11849,7 @@ class GridsomePluginHtaccess {
             this._insertPreventScriptInjection();
             this._insertPreventDdosAttacks();
             this._insertCustomHeaders();
+            this._insertFileExpirations();
             this._insertBlockedUserAgents();
             this._insertBlockedIp();
             this._insertFeaturePolicy();
@@ -11870,7 +11871,7 @@ class GridsomePluginHtaccess {
             /**
              * @todo
              */
-            filesExpiration: {},
+            fileExpirations: {},
             forceHttps: false,
             notCachedFiles: [],
             pingable: true,
@@ -11893,6 +11894,7 @@ class GridsomePluginHtaccess {
         this._checkContentSecurityPolicyOption();
         this._checkCustomContent();
         this._checkCustomHeadersOption();
+        this._checkFileExpirations();
         this._checkDisableDirectoryIndexOption();
         this._checkFeaturePolicyOption();
         this._checkForceHttpsOption();
@@ -12084,6 +12086,29 @@ class GridsomePluginHtaccess {
             this._htaccessLines.push("\n");
         }
     }
+    _insertFileExpirations() {
+        if ("default" in this._options.fileExpirations &&
+            this._options.fileExpirations.default !== undefined &&
+            this._options.fileExpirations.default.length > 0) {
+            this._htaccessLines.push("# Default file expiration");
+            this._htaccessLines.push(`ExpiresDefault "${this._options.fileExpirations.default}"`);
+            this._htaccessLines.push("\n");
+        }
+        if ("fileTypes" in this._options.fileExpirations &&
+            this._options.fileExpirations.fileTypes instanceof Object) {
+            const numberOfFileTypes = Object.keys(this._options.fileExpirations.fileTypes).length;
+            if (numberOfFileTypes > 0) {
+                this._htaccessLines.push("# Files expirations");
+            }
+            for (const mimeType in this._options.fileExpirations.fileTypes) {
+                const expiration = this._options.fileExpirations.fileTypes[mimeType];
+                this._htaccessLines.push(`ExpiresByType ${mimeType} "${expiration}"`);
+            }
+            if (numberOfFileTypes > 0) {
+                this._htaccessLines.push("\n");
+            }
+        }
+    }
     _throwIfMissingOption(option) {
         if (!(option in this._options)) {
             throw new MissingKeyError(`"${option}" must be present`);
@@ -12178,6 +12203,36 @@ class GridsomePluginHtaccess {
             const headerContent = this._options.customHeaders[headerName];
             if (headerContent.includes('"')) {
                 throw new InvalidCharacterError(`"${optionName}.${headerName}" contains a forbidden double quote`);
+            }
+        }
+    }
+    _checkFileExpirations() {
+        const optionName = "fileExpirations";
+        this._throwIfMissingOption(optionName);
+        this._throwIfOptionNotObject(optionName);
+        if ("default" in this._options.fileExpirations) {
+            if (typeof this._options.fileExpirations.default !== "string") {
+                throw new TypeError(`"fileExpirations.default" must be a string`);
+            }
+            if (this._options.fileExpirations.default.includes('"')) {
+                throw new InvalidCharacterError(`"fileExpirations.default" must not contain any double quote`);
+            }
+        }
+        if ("fileTypes" in this._options.fileExpirations) {
+            if (!(this._options.fileExpirations.fileTypes instanceof Object)) {
+                throw new TypeError(`"fileExpirations.fileTypes" must be an object`);
+            }
+            for (const mimeType in this._options.fileExpirations.fileTypes) {
+                if (!(mimeType in mimeDb)) {
+                    throw new InvalidArgumentException(`"fileExpirations.fileTypes.${mimeType}" must be a valid MIME type`);
+                }
+                const expiration = this._options.fileExpirations.fileTypes[mimeType];
+                if (typeof expiration !== "string") {
+                    throw new TypeError(`"fileExpirations.fileTypes.${mimeType}" must be a string`);
+                }
+                if (expiration.includes('"')) {
+                    throw new InvalidCharacterError(`"fileExpirations.fileTypes.${mimeType}" must not contain any double quote`);
+                }
             }
         }
     }

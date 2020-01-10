@@ -51,7 +51,7 @@
 		"server"
 	],
 	"scripts": {
-		"build": "gulp build",
+		"build": "ncu && gulp build",
 		"test": "nyc --reporter=lcov --reporter=text mocha --require @babel/register test",
 		"coverage": "codecov",
 		"release": "np"

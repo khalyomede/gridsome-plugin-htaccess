@@ -9,6 +9,7 @@ import json from "@rollup/plugin-json";
 const ts = async () => {
 	const bundle = await rollup({
 		input: "src/gridsome.server.ts",
+		external: ["fs", "path", "url"],
 		plugins: [
 			json(),
 			nodeResolve({

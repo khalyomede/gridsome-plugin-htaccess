@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The following rules will now generate a valid `.htaccess` file
-  - `disableServerSignature`
+  - `disableServerSignature` (set to `true`)
   - `fileExpirations`
+  - `preventScriptInjection` (set to `true`)
 
 ## [0.2.0] 2020-01-10
 

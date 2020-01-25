@@ -11995,12 +11995,16 @@ class GridsomePluginHtaccess {
     _insertPreventScriptInjection() {
         if (this._options.preventScriptInjection) {
             this._htaccessLines.push("# Preventing script injection");
-            this._htaccessLines.push("Options + FollowSymLinks");
-            this._htaccessLines.push("RewriteEngine On");
-            this._htaccessLines.push("RewriteCond % { QUERY_STRING }(<|% 3C).* script.* (>|% 3E)[NC, OR]");
-            this._htaccessLines.push("RewriteCond % { QUERY_STRING } GLOBALS(=|[|% [0 - 9A - Z]{ 0, 2})[OR]");
-            this._htaccessLines.push("RewriteCond % { QUERY_STRING } _REQUEST(=|[|% [0 - 9A - Z]{ 0, 2})");
-            this._htaccessLines.push("RewriteRule ^ (.*)$ index.html[F, L]");
+            this._htaccessLines.push("<IfModule mod_rewrite.c>");
+            this._htaccessLines.push("\tRewriteEngine On");
+            this._htaccessLines.push(`\tRewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]`);
+            this._htaccessLines.push(`\tRewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]`);
+            this._htaccessLines.push(`\tRewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})`);
+            this._htaccessLines.push("\tRewriteRule .* index.html [F,L]");
+            this._htaccessLines.push("</IfModule>");
+            this._htaccessLines.push("<IfModule mod_headers.c>");
+            this._htaccessLines.push(`\tHeader set X-XSS-Protection "1; mode=block"`);
+            this._htaccessLines.push("</IfModule>");
             this._htaccessLines.push("\n");
         }
     }

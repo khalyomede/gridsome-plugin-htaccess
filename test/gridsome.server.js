@@ -181,12 +181,16 @@ Redirect 301 /7-tips-on-laravel-5 /7-tips-on-laravel-6
 		});
 
 		const expected = `# Preventing script injection
-Options + FollowSymLinks
-RewriteEngine On
-RewriteCond % { QUERY_STRING }(<|% 3C).* script.* (>|% 3E)[NC, OR]
-RewriteCond % { QUERY_STRING } GLOBALS(=|[|% [0 - 9A - Z]{ 0, 2})[OR]
-RewriteCond % { QUERY_STRING } _REQUEST(=|[|% [0 - 9A - Z]{ 0, 2})
-RewriteRule ^ (.*)$ index.html[F, L]
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+	RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+	RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+	RewriteRule .* index.html [F,L]
+</IfModule>
+<IfModule mod_headers.c>
+	Header set X-XSS-Protection "1; mode=block"
+</IfModule>
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();

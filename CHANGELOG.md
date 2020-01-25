@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- The `disableServerSignature` will generate a correct htaccess file (when the option is set to `true`).
+- The following rules will now generate a valid `.htaccess` file
+  - `disableServerSignature`
+  - `fileExpirations`
 
 ## [0.2.0] 2020-01-10
 

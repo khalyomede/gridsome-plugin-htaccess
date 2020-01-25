@@ -359,7 +359,9 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		});
 
 		const expected = `# Default file expiration
-ExpiresDefault "access plus one year"
+<IfModule mod_expires.c>
+	ExpiresDefault "access plus one year"
+</IfModule>
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();
@@ -378,7 +380,9 @@ ExpiresDefault "access plus one year"
 		});
 
 		const expected = `# Files expirations
-ExpiresByType text/html "access plus one day"
+<IfModule mod_expires.c>
+	ExpiresByType text/html "access plus one day"
+</IfModule>
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();

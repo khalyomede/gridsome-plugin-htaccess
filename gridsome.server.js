@@ -12091,7 +12091,9 @@ class GridsomePluginHtaccess {
             this._options.fileExpirations.default !== undefined &&
             this._options.fileExpirations.default.length > 0) {
             this._htaccessLines.push("# Default file expiration");
-            this._htaccessLines.push(`ExpiresDefault "${this._options.fileExpirations.default}"`);
+            this._htaccessLines.push("<IfModule mod_expires.c>");
+            this._htaccessLines.push(`\tExpiresDefault "${this._options.fileExpirations.default}"`);
+            this._htaccessLines.push("</IfModule>");
             this._htaccessLines.push("\n");
         }
         if ("fileTypes" in this._options.fileExpirations &&
@@ -12099,12 +12101,14 @@ class GridsomePluginHtaccess {
             const numberOfFileTypes = Object.keys(this._options.fileExpirations.fileTypes).length;
             if (numberOfFileTypes > 0) {
                 this._htaccessLines.push("# Files expirations");
+                this._htaccessLines.push("<IfModule mod_expires.c>");
             }
             for (const mimeType in this._options.fileExpirations.fileTypes) {
                 const expiration = this._options.fileExpirations.fileTypes[mimeType];
-                this._htaccessLines.push(`ExpiresByType ${mimeType} "${expiration}"`);
+                this._htaccessLines.push(`\tExpiresByType ${mimeType} "${expiration}"`);
             }
             if (numberOfFileTypes > 0) {
+                this._htaccessLines.push("</IfModule>");
                 this._htaccessLines.push("\n");
             }
         }

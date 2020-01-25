@@ -1,6 +1,6 @@
 {
 	"name": "gridsome-plugin-htaccess",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "Generates a .htaccess file at build time according to your options and save it at the root of your dist folder.",
 	"main": "gridsome.server.js",
 	"repository": "https://github.com/khalyomede/gridsome-plugin-htaccess",

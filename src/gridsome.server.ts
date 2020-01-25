@@ -1,14 +1,14 @@
-import { IOptions, IApi } from "./interface";
 import {
+	InvalidArgumentError,
 	InvalidCharacterError,
 	MissingKeyError,
-	InvalidArgumentError,
 } from "./exception";
+import { IApi, IOptions } from "./interface";
 import { writeFileSync } from "fs";
-import { isAbsolute } from "path";
 import { v4, v6 } from "is-ip";
-import mimeDb from "mime-db";
 import isUrlHttp from "is-url-http";
+import mimeDb from "mime-db";
+import { isAbsolute } from "path";
 
 class GridsomePluginHtaccess {
 	protected _options: IOptions;
@@ -37,9 +37,9 @@ class GridsomePluginHtaccess {
 					console.timeEnd("gridsome-plugin-htaccess");
 
 					return;
-				} else {
-					throw error;
 				}
+
+				throw error;
 			}
 
 			this._insertDisableDirectoryIndex();
@@ -67,11 +67,12 @@ class GridsomePluginHtaccess {
 
 	public static defaultOptions(): IOptions {
 		return {
-			blockedUserAgents: [],
 			blockedIp: [],
+			blockedUserAgents: [],
 			contentSecurityPolicy: {},
 			customHeaders: {},
 			disableDirectoryIndex: false,
+			disableServerSignature: false,
 			featurePolicy: {},
 			/**
 			 * @todo
@@ -89,7 +90,6 @@ class GridsomePluginHtaccess {
 			 */
 			preventScriptInjection: false,
 			redirections: [],
-			disableServerSignature: false,
 			textCompression: [],
 		};
 	}
@@ -292,7 +292,7 @@ class GridsomePluginHtaccess {
 	private _insertBlockedUserAgents(): void {
 		if (this._options.blockedUserAgents.length > 0) {
 			const userAgents = this._options.blockedUserAgents.reduce(
-				(userAgents, userAgent) => `${userAgents}|${userAgent}`
+				(UAs, UA) => `${UAs}|${UA}`
 			);
 
 			this._htaccessLines.push("# Blocked user agents");
@@ -320,7 +320,7 @@ class GridsomePluginHtaccess {
 
 	private _insertFeaturePolicy(): void {
 		if (Object.keys(this._options.featurePolicy).length > 0) {
-			let features: Array<string> = [];
+			const features: Array<string> = [];
 
 			for (const featureName in this._options.featurePolicy) {
 				let values = this._options.featurePolicy[featureName];
@@ -337,7 +337,7 @@ class GridsomePluginHtaccess {
 			}
 
 			const featureDirectives = features.reduce(
-				(features, feature) => `${features}; ${feature}`
+				(feats, feat) => `${feats}; ${feat}`
 			);
 
 			this._htaccessLines.push("# Feature policy");
@@ -350,7 +350,7 @@ class GridsomePluginHtaccess {
 
 	private _insertContentSecurityPolicy(): void {
 		if (Object.keys(this._options.contentSecurityPolicy).length > 0) {
-			let policies: Array<string> = [];
+			const policies: Array<string> = [];
 
 			for (const policyName in this._options.contentSecurityPolicy) {
 				let values = this._options.contentSecurityPolicy[policyName];
@@ -376,7 +376,7 @@ class GridsomePluginHtaccess {
 			}
 
 			const policyDirectives = policies.reduce(
-				(policies, policy) => `${policies}; ${policy}`
+				(polices, police) => `${polices}; ${police}`
 			);
 
 			this._htaccessLines.push("# Content Security Policy");

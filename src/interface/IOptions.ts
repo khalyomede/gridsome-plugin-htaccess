@@ -1,11 +1,11 @@
 import {
 	IContentSecurityPolicy,
-	IFeaturePolicy,
-	IRedirection,
-	IDdosAttackPreventionOption,
-	IFileExpirations,
-	ICustomHeaders,
 	ICustomContent,
+	ICustomHeaders,
+	IDdosAttackPreventionOption,
+	IFeaturePolicy,
+	IFileExpirations,
+	IRedirection,
 } from "./index";
 
 interface IOptions {

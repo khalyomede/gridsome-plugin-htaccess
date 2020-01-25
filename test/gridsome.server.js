@@ -311,13 +311,13 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		new GridsomeServer(api, {
 			...GridsomeServer.defaultOptions(),
 			notCachedFiles: [
-				"/service-worker.js",
-				"/assets/js/service-worker.js",
+				"service-worker.js",
+				"assets/js/service-worker.js",
 			],
 		});
 
 		const expected = `# Prevent the following files to be cached by your users' browser
-<Location "/service-worker.js">
+<Files "service-worker.js">
 	<IfModule mod_expires.c>
 		ExpiresActive Off
 	</IfModule>
@@ -325,14 +325,14 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		FileETag None
 		Header unset ETag
 		Header unset Pragma
-		Header unset Cache - Control
-		Header unset Last - Modified
+		Header unset Cache-Control
+		Header unset Last-Modified
 		Header set Pragma "no-cache"
-		Header set Cache - Control "max-age=0, no-cache, no-store, must-revalidate"
+		Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 		Header set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
 	</IfModule>
-</Location>
-<Location "/assets/js/service-worker.js">
+</Files>
+<Files "assets/js/service-worker.js">
 	<IfModule mod_expires.c>
 		ExpiresActive Off
 	</IfModule>
@@ -340,13 +340,13 @@ Header set Content-Security-Policy "img-src 'self'; font-src 'self' fonts.google
 		FileETag None
 		Header unset ETag
 		Header unset Pragma
-		Header unset Cache - Control
-		Header unset Last - Modified
+		Header unset Cache-Control
+		Header unset Last-Modified
 		Header set Pragma "no-cache"
-		Header set Cache - Control "max-age=0, no-cache, no-store, must-revalidate"
+		Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 		Header set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
 	</IfModule>
-</Location>
+</Files>
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();

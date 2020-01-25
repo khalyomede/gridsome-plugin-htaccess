@@ -197,7 +197,7 @@ class GridsomePluginHtaccess {
 			);
 
 			for (const file of this._options.notCachedFiles) {
-				this._htaccessLines.push(`<Location "${file}">`);
+				this._htaccessLines.push(`<Files "${file}">`);
 				this._htaccessLines.push("\t<IfModule mod_expires.c>");
 				this._htaccessLines.push("\t\tExpiresActive Off");
 				this._htaccessLines.push("\t</IfModule>");
@@ -205,17 +205,17 @@ class GridsomePluginHtaccess {
 				this._htaccessLines.push("\t\tFileETag None");
 				this._htaccessLines.push("\t\tHeader unset ETag");
 				this._htaccessLines.push("\t\tHeader unset Pragma");
-				this._htaccessLines.push("\t\tHeader unset Cache - Control");
-				this._htaccessLines.push("\t\tHeader unset Last - Modified");
+				this._htaccessLines.push("\t\tHeader unset Cache-Control");
+				this._htaccessLines.push("\t\tHeader unset Last-Modified");
 				this._htaccessLines.push(`\t\tHeader set Pragma "no-cache"`);
 				this._htaccessLines.push(
-					`\t\tHeader set Cache - Control "max-age=0, no-cache, no-store, must-revalidate"`
+					`\t\tHeader set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"`
 				);
 				this._htaccessLines.push(
 					`\t\tHeader set Expires "Thu, 1 Jan 1970 00:00:00 GMT"`
 				);
 				this._htaccessLines.push("\t</IfModule>");
-				this._htaccessLines.push("</Location>");
+				this._htaccessLines.push("</Files>");
 			}
 
 			this._htaccessLines.push("\n");

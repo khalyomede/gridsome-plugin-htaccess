@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `disableServerSignature` (set to `true`)
   - `fileExpirations`
   - `preventScriptInjection` (set to `true`)
+  - `notCachedFiles`
 
 ## [0.2.0] 2020-01-10
 

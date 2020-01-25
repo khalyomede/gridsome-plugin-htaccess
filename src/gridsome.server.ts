@@ -126,7 +126,7 @@ class GridsomePluginHtaccess {
 			this._htaccessLines.push(
 				"# Prevent your server from sending the version of the server"
 			);
-			this._htaccessLines.push("Server Signature Off");
+			this._htaccessLines.push("ServerSignature Off");
 			this._htaccessLines.push("\n");
 		}
 	}

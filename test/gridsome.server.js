@@ -59,7 +59,7 @@ Options All -Indexes
 		const expected = `foo
 
 # Prevent your server from sending the version of the server
-Server Signature Off
+ServerSignature Off
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();
@@ -78,7 +78,7 @@ Server Signature Off
 		});
 
 		const expected = `# Prevent your server from sending the version of the server
-Server Signature Off
+ServerSignature Off
 
 foo
 `;
@@ -94,7 +94,7 @@ foo
 		});
 
 		const expected = `# Prevent your server from sending the version of the server
-Server Signature Off
+ServerSignature Off
 
 `;
 		const actual = readFileSync("./static/.htaccess").toString();
